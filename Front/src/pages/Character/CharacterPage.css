@@ -1,0 +1,18 @@
+.desktop-image {
+    display: block;
+  }
+  
+  .mobile-image {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .desktop-image {
+      display: none;
+    }
+  
+    .mobile-image {
+      display: block;
+    }
+  }
+  
