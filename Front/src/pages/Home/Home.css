@@ -13,6 +13,7 @@
     height: 100%;
     object-fit: cover;
   }
+
 #main-menu ul {
     height: 100vh;
     padding-top: 50px;
@@ -105,14 +106,6 @@
 #part5 div {
     background-position: -560px 0px;
 }
-
-@keyframes blink {
-    0% {opacity: 1;}
-    50% {opacity: 0;}
-    100% {opacity: 1;}
+.buttonC:hover {
+    color: #fff !important;
   }
-  
-  .blinking {
-    animation: blink 1s infinite;
-  }
-  
