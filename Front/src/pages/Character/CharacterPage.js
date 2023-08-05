@@ -1,32 +1,33 @@
 import React from "react";
 import "./CharacterPage.css";
-import img from '../../images/megumi.png'
+import CharacterDetails from "./components/CharacterDetails";
+import { useParams } from "react-router-dom"; // Import useParams to access URL parameters
 
-function CharacterPage({ character }) {
-  const characters = Array(5).fill({
-    name: "Ryomen Sukuna",
-    category: "Fléaux",
-    spell: "sort d'inversion",
-    description: "dqsfdfgqdsfqdfsgqdgfdF",
-  });
+function CharacterPage({ character, characterImages }) {
+  const { firstname } = useParams(); // Get the character's firstname from the URL parameters
+
+  const pageStyle = {
+    background: `url(${characterImages[character?.firstname] || ""})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "100vh",
+  };
+
+  const mobileStyle = {
+    ...pageStyle,
+    backgroundSize: "cover",
+  };
 
   return (
-    <section className="category container">
-    <div className="row justify-content-md-center mx-2">
-    {characters.map((char, index) => (
-          <div key={index} className="fiche col-12 col-md-6 mt-5">
-            <div className="cercle"></div>
-            <div className="content">
-              <h2>{char.name}</h2>
-              <p>Categorie : {char.category}</p>
-              <p>Sort : {char.spell}</p>
-              <p>{char.description}</p>
-            </div>
-            <img src={img} alt="dsfg"/>
-          </div>
-        ))}
+    <div>
+      <div style={pageStyle} className="desktop-image"></div>
+      <div style={mobileStyle} className="mobile-image"></div>
+      <div style={{ height: "1500px", background: "lightgray", padding: "20px" }}>
+        <h2>Character Details</h2>
+        {character && character.firstname === firstname && <CharacterDetails character={character} />}
+      </div>
     </div>
-    </section>
   );
 }
 

@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../images/Jujutsu_kaisen_logo.png';
-import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Container, Toolbar, Typography, MenuItem, Avatar, Tooltip, IconButton, Menu } from '@mui/material';
+import { AppBar, Box, Container, Toolbar, Typography, MenuItem, IconButton, Menu } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useNavigate } from 'react-router-dom';
 
 function NavBar({ characters, onCharacterSelect }) {
   const navigate = useNavigate();
-  const [charactersAnchorEl, setCharactersAnchorEl] = React.useState(null);
-  const [episodesAnchorEl, setEpisodesAnchorEl] = React.useState(null);
+  const [charactersAnchorEl, setCharactersAnchorEl] = useState(null);
 
   const handleOpenCharactersMenu = (event) => {
     setCharactersAnchorEl(event.currentTarget);
@@ -18,17 +17,9 @@ function NavBar({ characters, onCharacterSelect }) {
     setCharactersAnchorEl(null);
   };
 
-  const handleOpenEpisodesMenu = (event) => {
-    setEpisodesAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseEpisodesMenu = () => {
-    setEpisodesAnchorEl(null);
-  };
-
   const handleCharacterSelect = (firstname) => {
     onCharacterSelect(firstname);
-    navigate('/characters');
+    navigate(`/characters/${firstname}`);
   };
 
   return (
@@ -70,47 +61,24 @@ function NavBar({ characters, onCharacterSelect }) {
               }}
             >
               {characters.map((character) => (
-                <MenuItem key={character._id} onClick={() => handleCharacterSelect(character.firstname)}
-                sx={{
-                  backgroundColor: 'white',
-                  color: 'black',
-                  '&:hover': {
-                    backgroundColor: '#333',
-                    color: 'white',
-                  },
-                }}>
+                <MenuItem
+                  key={character._id}
+                  onClick={() => {
+                    handleCharacterSelect(character.firstname);
+                    handleCloseCharactersMenu();
+                  }}
+                  sx={{
+                    backgroundColor: 'white',
+                    color: 'black',
+                    '&:hover': {
+                      backgroundColor: '#333',
+                      color: 'white',
+                    },
+                  }}
+                >
                   {character.firstname}
                 </MenuItem>
               ))}
-            </Menu>
-
-            <IconButton
-              size="large"
-              aria-label="episodes-menu"
-              aria-haspopup="true"
-              onClick={handleOpenEpisodesMenu}
-              color="inherit"
-            >
-              <Typography variant="body1">Episodes and Info</Typography>
-            </IconButton>
-            <Menu
-              id="episodes-menu"
-              anchorEl={episodesAnchorEl}
-              open={Boolean(episodesAnchorEl)}
-              onClose={handleCloseEpisodesMenu}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-              <MenuItem>Action</MenuItem>
-              <MenuItem>Another action</MenuItem>
-              <MenuItem>Something</MenuItem>
-              <MenuItem>Separated link</MenuItem>
             </Menu>
 
             <Typography
